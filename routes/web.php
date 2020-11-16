@@ -23,4 +23,4 @@ Route::get('/logout', 'App\Http\Controllers\loginController@logout');
 Route::get('/dashboard', 'App\Http\Controllers\dashboardController@index');
 Route::get('/project', 'App\Http\Controllers\projectController@index');
 Route::get('/project/daihatsu-leads', 'App\Http\Controllers\projectController@daihatsuLeads');
-Route::get('/project/daihatsu-leads/export', 'App\Http\Controllers\projectController@daihatsuLeadsExport');
+Route::get('/project/daihatsu-leads/export/{nameTable}', 'App\Http\Controllers\projectController@daihatsuLeadsExport');
