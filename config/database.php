@@ -63,6 +63,18 @@ return [
             ]) : [],
         ],
 
+        # Secondary database connection
+        'mysql2' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_SECOND'),
+            'database' => env('DB_DATABASE_SECOND'),
+            'username' => env('DB_USERNAME_SECOND'),
+            'password' => env('DB_PASSWORD_SECOND'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
