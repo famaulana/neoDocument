@@ -11,6 +11,24 @@ class projectModel extends Model
 {
     protected $table = 'project';
 
+    public function storeData($data)
+    {
+        if (DB::table('project')->insert($data)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function deleteData($data)
+    {
+        if(projectModel::where('name', $data)->delete()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function getNameProject()
     {
         $data = DB::table('project')->pluck('name');

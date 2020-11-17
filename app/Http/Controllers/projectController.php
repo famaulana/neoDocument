@@ -15,25 +15,56 @@ class projectController extends Controller
 {
     public function index()
     {
-        if(Session::get('login') != null){
-
-            $data = array(
-                'title' => 'Project',
-            );
-            return view('pages/project', $data);
-        }else{
-            return redirect('/login');
-        }
+        $project = projectModel::getNameProject();
+        $data = array(
+            'title' => 'Project Settings',
+            'project' => $project,
+            'heading' => 'All Project',
+        );
+        return view('pages/settingsProject', $data);
     }
 
     public function addProject()
     {
-        # code...
+        $project = projectModel::getNameProject();
+        $data = array(
+            'title' => 'Add Project',
+            'project' => $project,
+        );
+        return view('pages/addProject', $data);
+    }
+
+    public function storeDataProject(Request $request)
+    {
+        $project = new projectModel;
+        if($request->except('_token') == null){
+            if($project->storeData($request->except('_token'))){
+                Session::flash('success', 'Your data has been stored, check on project menus!!');
+                return redirect('/dashboard');
+            }else{
+                Session::flash('error', 'Please input username/password correctly!!');
+                return redirect('/project/add');
+            }
+        }else{
+            Session::flash('error', 'Please fill all fields corectly!!');
+            return redirect('/project/add');
+        }
+    }
+
+    public function deleteProject($nameProject)
+    {
+        $project = new projectModel;
+        if ($project->deleteData($nameProject)){
+            Session::flash('success', 'Your data has been delete permanently!!');
+            return redirect('/project/settings');
+        } else {
+            Session::flash('error', 'Error while remove data Project!!');
+            return redirect('/project/settings');
+        }
     }
 
     public function projectOverview($nameProject)
     {
-        // BIKIN INI DYNAMIC!!!
         $project = new projectModel;
         $detailProject = $project->getDetailProject($nameProject);
         $dataTable = $project->getData($detailProject);
@@ -42,9 +73,7 @@ class projectController extends Controller
             'title' => 'Project - '.$detailProject['name'],
             'project' => $project,
             'heading' => $detailProject['name'],
-            // make dynamic data to dynamic proccess(biar bisa export di semua table)
             'dataTable' => $dataTable,
-            // make dynamic data to dynamic proccess(biar bisa export di semua table)
             'nameProject' => $detailProject['name']
         );
         return view('pages/project', $data);

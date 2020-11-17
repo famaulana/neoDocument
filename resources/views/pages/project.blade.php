@@ -7,12 +7,12 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary float-left">DataTables Example</h6>
-        <a href="/project/daihatsu-leads/export/{{$nameProject}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right ml-3"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report Excel</a>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right ml-3"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report GSheet</a>
+        <a href="/project/export/{{$nameProject}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right ml-3"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report Excel</a>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right ml-3 disabled" disabled><i class="fas fa-download fa-sm text-white-50"></i> Generate Report GSheet</a>
     </div>
     <div class="card-body">
-    <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <div class="table-responsive" style="overflow: hidden">
+        <table class="table table-bordered" id="dataTable" width="100%" style="overflow-x:scroll;display:block" cellspacing="0">
         <thead>
             <tr>
                 @for($i = 0; $i < count((array)$dataTable[0]); $i++)

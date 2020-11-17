@@ -17,8 +17,10 @@
   <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
   <!-- Custom styles for this template-->
   <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
+
 
 </head>
 
@@ -59,7 +61,7 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="/project" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-fw fa-sitemap"></i>
           <span>Project</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -68,9 +70,21 @@
             @foreach ($project as $item)
               <a class="collapse-item" href="/project/{{$item}}">{{$item}}</a>
             @endforeach
-            <a class="collapse-item" href="/project/add">Add Project</a>
+            <a class="collapse-item bg-primary text-white" href="/project/add">Add Project</a>
           </div>
         </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      <div class="sidebar-heading">
+        Settings
+      </div>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/project/settings">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Project Settings</span></a>
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
@@ -334,6 +348,33 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          @if ($message = Session::get('success'))
+            <div class="toast" style="position: absolute; top: 20px; right: 20px; opacity:1;z-index:999;">
+              <div class="toast-header">
+                <span class="rounded mr-2 fa fa-check" alt="..."></span>
+                <strong class="mr-auto">Success</strong>
+                <button type="button" class="ml-2 mb-1 close close-toast" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="toast-body">
+                {{$message}}
+              </div>
+            </div>
+          @elseif ($message = Session::get('error'))
+            <div class="toast" style="position: absolute; top: 20px; right: 20px; opacity:1;z-index:999;">
+              <div class="toast-header">
+                <span class="rounded mr-2 fa fa-times" alt="..."></span>
+                <strong class="mr-auto">Failed</strong>
+                <button type="button" class="ml-2 mb-1 close close-toast" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="toast-body">
+                {{$message}}
+              </div>
+            </div>
+          @endif
           @endsection
           
           @section('footer')
@@ -398,7 +439,8 @@
 
   <!-- Page level custom scripts -->
   <script src="{{asset('assets/js/demo/chart-area-demo.js')}}"></script>
-  <script src="{{asset('assets/js/demo/chart-pie-demo.js')}}"></script>
+  <script src="{{asset('assets/js/demo/chart-pie-demo.js')}}"></script>  
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
   <script>
     $(document).ready(function(){
       $url = window.location.pathname;
@@ -406,7 +448,18 @@
         $('.nav-item').removeClass("active");
         $('.nav-item:nth-of-type(2)').addClass("active");
       }
+      $('#dataTable').DataTable();
     })
+
+    $('.close-toast').click(function(){
+      $('.toast').remove();
+    });
+
+    
+    $('.btn-delete').click(function(){
+        $data = $(this).attr("item");
+        $('.btn-modal-delete').attr("href", '/project/delete/'.$data);
+    });
   </script>
 
 </body>
