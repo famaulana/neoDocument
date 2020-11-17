@@ -65,8 +65,10 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Daihatsu Projects:</h6>
-            <a class="collapse-item" href="/project/daihatsu-leads">Daihatsu Leads</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
+            @foreach ($project as $item)
+              <a class="collapse-item" href="/project/{{$item}}">{{$item}}</a>
+            @endforeach
+            <a class="collapse-item" href="/project/add">Add Project</a>
           </div>
         </div>
       </li>

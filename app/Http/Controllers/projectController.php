@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Query\Builder;
 use App\Exports\dataExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\projectModel;
 use Session;
 use DB;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ class projectController extends Controller
     public function index()
     {
         if(Session::get('login') != null){
+
             $data = array(
                 'title' => 'Project',
             );
@@ -24,31 +26,42 @@ class projectController extends Controller
         }
     }
 
-    public function daihatsuLeads()
+    public function addProject()
+    {
+        # code...
+    }
+
+    public function projectOverview($nameProject)
     {
         // BIKIN INI DYNAMIC!!!
-        $dataTable = DB::connection('mysql2')->table('tbl_virtual_sales')->get();
+        $project = new projectModel;
+        $detailProject = $project->getDetailProject($nameProject);
+        $dataTable = $project->getData($detailProject);
+        $project = projectModel::getNameProject();
         $data = array(
-            'title' => 'Project - Daihatsu Leads',
-            'heading' => 'Daihatsu Leads',
+            'title' => 'Project - '.$detailProject['name'],
+            'project' => $project,
+            'heading' => $detailProject['name'],
             // make dynamic data to dynamic proccess(biar bisa export di semua table)
             'dataTable' => $dataTable,
             // make dynamic data to dynamic proccess(biar bisa export di semua table)
-            'nameTable' => 'tbl_virtual_sales'
+            'nameProject' => $detailProject['name']
         );
         return view('pages/project', $data);
     }
 
-    public function daihatsuLeadsExport($nameTable){
+    public function export($nameProject){
         // get time for name of file
         $mytime = Carbon::now();
         $mytime->toDateTimeString();
         // get all data by tbl_virtual_sales
-        $dataTable = DB::connection('mysql2')->table('tbl_virtual_sales')->get();
+        $project = new projectModel;
+        $detailProject = $project->getDetailProject($nameProject);
+        $dataTable = $project->getData($detailProject);
         // wrap to array for passing for proccess function after 
         $data = array(
             // get by url data from function before(see on route and view)
-            'nameTable' => $nameTable,
+            'nameTable' =>$detailProject['table'],
             'dataTable' => $dataTable
         );
         // pass data to function after for sort and change from std object to array
