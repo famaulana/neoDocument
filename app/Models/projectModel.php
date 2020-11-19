@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
-use DB;
 
 class projectModel extends Model
 {
@@ -13,7 +12,7 @@ class projectModel extends Model
 
     public function storeData($data)
     {
-        if (DB::table('project')->insert($data)){
+        if (projectModel::insert($data)){
             return true;
         }else{
             return false;
@@ -31,7 +30,7 @@ class projectModel extends Model
 
     public static function getNameProject()
     {
-        $data = DB::table('project')->pluck('name');
+        $data = projectModel::pluck('name');
         return $data;
     }
 
@@ -47,9 +46,8 @@ class projectModel extends Model
             'host' => $host,
             'database' => $detailProject->database,
         );
-        $database = $this->connectToDatabase($connection);
+        $this->connectToDatabase($connection);
         $dataReturn = DB::connection($connection['host'])->table($detailProject['table'])->get();
-        // dd($dataReturn);
         return $dataReturn;
     }
 
@@ -68,8 +66,6 @@ class projectModel extends Model
 
     public function connectToDatabase($data)
     {
-        $lastDB = $data['host'];
         Config::set('database.connections.'.$data['host'].'.database', $data['database']);
-        return $lastDB;
     }
 }

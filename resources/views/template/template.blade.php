@@ -34,8 +34,8 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon">
+          <img src="{{asset('assets/img/0.png')}}" style="width: 60px; margin: 0px -20px 0px 0px; padding: 0;">
         </div>
         <div class="sidebar-brand-text mx-3">NeoDocument <sup>beta</sup></div>
       </a>
@@ -317,7 +317,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Session::get('login')['name']}}</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <img class="img-profile rounded-circle" src="{{asset('assets/img/download.jfif')}}">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -445,8 +445,13 @@
     $(document).ready(function(){
       $url = window.location.pathname;
       if($url.includes('project')){
-        $('.nav-item').removeClass("active");
-        $('.nav-item:nth-of-type(2)').addClass("active");
+        if($url.includes('settings')){
+          $('.nav-item').removeClass("active");
+          $('.nav-item:nth-of-type(3)').addClass("active");
+        }else{
+          $('.nav-item').removeClass("active");
+          $('.nav-item:nth-of-type(2)').addClass("active");
+        }
       }
       $('#dataTable').DataTable();
     })

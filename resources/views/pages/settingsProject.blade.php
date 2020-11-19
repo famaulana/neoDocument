@@ -1,7 +1,7 @@
 @include('template.template')
 @yield('header')
 <h1 class="h3 mb-2 text-gray-800">{{$heading}}</h1>
-<p class="mb-4">Data from website {{$heading}}. You can export this data to Excel files or Google Spreadsheet data.</p>
+<p class="mb-4">{{$heading}} settings by name. You can export this data to Excel files or Google Spreadsheet data on interface section.</p>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -10,7 +10,7 @@
     </div>
     <div class="card-body">
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" id="" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th style="width:90%">Project Name</th>

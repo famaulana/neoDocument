@@ -8,7 +8,6 @@ use App\Exports\dataExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\projectModel;
 use Session;
-use DB;
 use Carbon\Carbon;
 
 class projectController extends Controller
@@ -37,12 +36,13 @@ class projectController extends Controller
     public function storeDataProject(Request $request)
     {
         $project = new projectModel;
-        if($request->except('_token') == null){
+        // dd($request->except('_token'));
+        if($request->except('_token') != null){
             if($project->storeData($request->except('_token'))){
                 Session::flash('success', 'Your data has been stored, check on project menus!!');
                 return redirect('/dashboard');
             }else{
-                Session::flash('error', 'Please input username/password correctly!!');
+                Session::flash('error', 'Error while uploading your data!!');
                 return redirect('/project/add');
             }
         }else{
